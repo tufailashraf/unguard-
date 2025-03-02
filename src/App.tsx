@@ -58,8 +58,8 @@ function App() {
         return <QuizApp />;
       case 'contact':
         return <Contact />;
-        case 'login':
-          return <LoginPage />;
+        case '':
+          return <Page />;
           case 'admin-dashboard':
             return <AdminDashboard />;
         case 'chat':
@@ -279,7 +279,7 @@ function App() {
 
               {/* Chat Link */}
               <button
-                onClick={() => navigateTo('login')}
+                onClick={() => navigateTo('')}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
               >
                 Login
@@ -355,7 +355,7 @@ function App() {
                 </button>
                 <button
                   onClick={() => {
-                    navigateTo('con');
+                    navigateTo('admin-dashboard');
                     toggleDropdown('mobile-menu');
                   }}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200 text-center"
