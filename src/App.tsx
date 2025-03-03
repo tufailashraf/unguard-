@@ -147,9 +147,12 @@ function App() {
                     </div>
                     <h3 className="text-xl font-semibold mb-2">Take Exam</h3>
                     <p className="text-sm mb-6">Test your skills with an online exam.</p>
-                    <a href="#" className="inline-block bg-white text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition">
-                      Start Exam
-                    </a>
+                    <button
+                      onClick={() => navigateTo('exam')}
+                      className="inline-block bg-white text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition"
+                    >
+                      Book Exam
+                    </button>
                   </div>
 
                   {/* Card 4 */}
@@ -161,9 +164,12 @@ function App() {
                     </div>
                     <h3 className="text-xl font-semibold mb-2">Admin Dashboard</h3>
                     <p className="text-sm mb-6">Manage references, videos & exams.</p>
-                    <a href="#" className="inline-block bg-white text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition">
-                      Go to Admin Panel
-                    </a>
+                    <button
+                      onClick={() => navigateTo('login')}
+                      className="inline-block bg-white text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition"
+                    >
+                      Go To Admin Panel
+                    </button>
                   </div>
                 </div>
 
@@ -449,7 +455,7 @@ function App() {
           </button>
         </div>
       )}
-      
+
     </div>
   );
 }
