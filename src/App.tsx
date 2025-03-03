@@ -384,58 +384,58 @@ function App() {
       {renderPage()}
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white mt-auto">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-lg font-semibold mb-4">About Us</h3>
-              <p className="text-gray-400">
-                We provide comprehensive technical training and resources for engineering professionals.
-              </p>
-            </div>
+      {activePage !== 'admin-dashboard' && (
+        <footer className="bg-gray-900 text-white mt-auto">
+          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div>
+                <h3 className="text-lg font-semibold mb-4">About Us</h3>
+                <p className="text-gray-400">
+                  We provide comprehensive technical training and resources for engineering professionals.
+                </p>
+              </div>
 
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-              <ul className="space-y-2">
-                <li><button data-page="videos" onClick={() => navigateTo('videos')} className="text-gray-400 hover:text-white">Video Library</button></li>
-                <li><button data-page="exam" onClick={() => navigateTo('exam')} className="text-gray-400 hover:text-white">Book Exam</button></li>
-                <li><button data-page="contact" onClick={() => navigateTo('contact')} className="text-gray-400 hover:text-white">Contact Us</button></li>
-              </ul>
-            </div>
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul className="space-y-2">
+                  <li><button data-page="videos" onClick={() => navigateTo('videos')} className="text-gray-400 hover:text-white">Video Library</button></li>
+                  <li><button data-page="exam" onClick={() => navigateTo('exam')} className="text-gray-400 hover:text-white">Book Exam</button></li>
+                  <li><button data-page="contact" onClick={() => navigateTo('contact')} className="text-gray-400 hover:text-white">Contact Us</button></li>
+                </ul>
+              </div>
 
-            <div>
-              <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
-              <ul className="space-y-2">
-                <a href='mailto: ' className="flex items-center text-gray-400">
-                  <Mail size={16} className="mr-2" />
-                  info@example.com
-                </a>
-                <li className="flex items-center text-gray-400">
-                  <Phone size={16} className="mr-2" />
-                  +1 (555) 123-4567
-                </li>
-                <li className="flex items-center text-gray-400">
-                  <MapPin size={16} className="mr-2" />
-                  123 Tech Street, CA 94043
-                </li>
-              </ul>
-              <div className="flex space-x-4 mt-4">
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <Facebook size={20} />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <Twitter size={20} />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white">
-                  <Linkedin size={20} />
-                </a>
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+                <ul className="space-y-2">
+                  <a href='mailto: ' className="flex items-center text-gray-400">
+                    <Mail size={16} className="mr-2" />
+                    info@example.com
+                  </a>
+                  <li className="flex items-center text-gray-400">
+                    <Phone size={16} className="mr-2" />
+                    +1 (555) 123-4567
+                  </li>
+                  <li className="flex items-center text-gray-400">
+                    <MapPin size={16} className="mr-2" />
+                    123 Tech Street, CA 94043
+                  </li>
+                </ul>
+                <div className="flex space-x-4 mt-4">
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    <Facebook size={20} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    <Twitter size={20} />
+                  </a>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    <Linkedin size={20} />
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </footer>
-
-
+        </footer>
+      )}
 
       {/* Chat Bubble */}
       {activePage !== 'login' && activePage !== 'chat' && (
@@ -449,36 +449,7 @@ function App() {
           </button>
         </div>
       )}
-      <div className="hidden md:flex items-center space-x-4">
-        <button
-          data-page="home"
-          onClick={() => navigateTo('home')}
-          className={`px-3 py-2 rounded-md text-sm font-medium ${
-            activePage === 'home' ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
-          }`}
-        >
-          Home
-        </button>
-        <button
-          data-page="chat"
-          onClick={() => navigateTo('chat')}
-          className={`px-3 py-2 rounded-md text-sm font-medium ${
-            activePage === 'chat' ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
-          }`}
-        >
-          Chat
-        </button>
-        <button
-          data-page="admin-dashboard"
-          onClick={() => navigateTo('admin-dashboard')}
-          className={`px-3 py-2 rounded-md text-sm font-medium ${
-            activePage === 'admin-dashboard' ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
-          }`}
-        >
-          Admin
-        </button>
-      </div>
-
+      
     </div>
   );
 }
