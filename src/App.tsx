@@ -192,8 +192,18 @@ function App() {
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center">
-              <img src={Logo} alt="logo" className="h-16 w-auto" />
-            </div>
+
+            <button
+                data-page="home"
+                onClick={() => navigateTo('home')}
+                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
+                }`}
+                >
+                <img src={Logo} alt="logo" className="h-16 w-auto" />
+              </button>
+            
+                </div>
+
 
             {/* Mobile menu button */}
             <div className="md:hidden">
