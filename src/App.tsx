@@ -58,14 +58,14 @@ function App() {
         return <QuizApp />;
       case 'contact':
         return <Contact />;
-        case '':
-          return <Page />;
-          case 'admin-dashboard':
-            return <AdminDashboard />;
-        case 'chat':
-          return <Chat />;
-          case 'paper-gen':
-            return <PaperGen />;
+      case 'login':
+        return <LoginPage onNavigate={navigateTo} />;
+      case 'admin-dashboard':
+        return <AdminDashboard onNavigate={navigateTo} />;
+      case 'chat':
+        return <Chat />;
+      case 'paper-gen':
+        return <PaperGen />;
       case 'home':
       default:
         return (
@@ -209,6 +209,7 @@ function App() {
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <button
+                data-page="home"
                 onClick={() => navigateTo('home')}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
                   }`}
@@ -218,6 +219,7 @@ function App() {
 
               {/* Reference Link */}
               <button
+                data-page="reference"
                 onClick={() => navigateTo('reference')}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'reference' ? 'font-semibold text-blue-600' : ''}`}
               >
@@ -226,6 +228,7 @@ function App() {
 
               {/* Videos Link */}
               <button
+                data-page="videos"
                 onClick={() => navigateTo('videos')}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'videos' ? 'font-semibold text-blue-600' : ''
                   }`}
@@ -270,6 +273,7 @@ function App() {
 
               {/* Contact Link */}
               <button
+                data-page="contact"
                 onClick={() => navigateTo('contact')}
                 className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'contact' ? 'font-semibold text-blue-600' : ''
                   }`}
@@ -279,7 +283,8 @@ function App() {
 
               {/* Chat Link */}
               <button
-                onClick={() => navigateTo('')}
+                data-page="login"
+                onClick={() => navigateTo('login')}
                 className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
               >
                 Login
@@ -292,6 +297,7 @@ function App() {
             <nav className="md:hidden mt-4 pb-4 border-t border-gray-200 animate-slideDown">
               <div className="flex flex-col space-y-4 pt-4">
                 <button
+                  data-page="home"
                   onClick={() => {
                     navigateTo('home');
                     toggleDropdown('mobile-menu');
@@ -302,6 +308,7 @@ function App() {
                   Home
                 </button>
                 <button
+                  data-page="videos"
                   onClick={() => {
                     navigateTo('videos');
                     toggleDropdown('mobile-menu');
@@ -313,6 +320,7 @@ function App() {
                 </button>
                 <div>
                   <button
+                    data-page="exam"
                     onClick={() => {
                       navigateTo('exam');
                       toggleDropdown('mobile-menu');
@@ -324,6 +332,7 @@ function App() {
                   </button>
                   <div className="pl-4 space-y-2 mt-2">
                     <button
+                      data-page="exam"
                       onClick={() => {
                         navigateTo('exam', 'practice');
                         toggleDropdown('mobile-menu');
@@ -335,6 +344,7 @@ function App() {
                     </button>
 
                     <button
+                      data-page="quiz-app"
                       onClick={() => navigateTo('quiz-app')}
                       className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 text-center hover:text-blue-600 ${activePage === 'quiz-app' ? 'bg-blue-50 text-blue-600' : ''
                         }`}
@@ -344,6 +354,7 @@ function App() {
                   </div>
                 </div>
                 <button
+                  data-page="contact"
                   onClick={() => {
                     navigateTo('contact');
                     toggleDropdown('mobile-menu');
@@ -354,8 +365,9 @@ function App() {
                   Contact
                 </button>
                 <button
+                  data-page="login"
                   onClick={() => {
-                    navigateTo('admin-dashboard');
+                    navigateTo('login');
                     toggleDropdown('mobile-menu');
                   }}
                   className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200 text-center"
@@ -385,9 +397,9 @@ function App() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
               <ul className="space-y-2">
-                <li><button onClick={() => navigateTo('videos')} className="text-gray-400 hover:text-white">Video Library</button></li>
-                <li><button onClick={() => navigateTo('exam')} className="text-gray-400 hover:text-white">Book Exam</button></li>
-                <li><button onClick={() => navigateTo('contact')} className="text-gray-400 hover:text-white">Contact Us</button></li>
+                <li><button data-page="videos" onClick={() => navigateTo('videos')} className="text-gray-400 hover:text-white">Video Library</button></li>
+                <li><button data-page="exam" onClick={() => navigateTo('exam')} className="text-gray-400 hover:text-white">Book Exam</button></li>
+                <li><button data-page="contact" onClick={() => navigateTo('contact')} className="text-gray-400 hover:text-white">Contact Us</button></li>
               </ul>
             </div>
 
@@ -429,6 +441,7 @@ function App() {
       {activePage !== 'login' && activePage !== 'chat' && (
         <div className="fixed bottom-10 right-10">
           <button
+            data-page="chat"
             onClick={() => navigateTo('chat')}
             aria-label="Open Paper Generation"
             className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
@@ -436,6 +449,35 @@ function App() {
           </button>
         </div>
       )}
+      <div className="hidden md:flex items-center space-x-4">
+        <button
+          data-page="home"
+          onClick={() => navigateTo('home')}
+          className={`px-3 py-2 rounded-md text-sm font-medium ${
+            activePage === 'home' ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
+          }`}
+        >
+          Home
+        </button>
+        <button
+          data-page="chat"
+          onClick={() => navigateTo('chat')}
+          className={`px-3 py-2 rounded-md text-sm font-medium ${
+            activePage === 'chat' ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
+          }`}
+        >
+          Chat
+        </button>
+        <button
+          data-page="admin-dashboard"
+          onClick={() => navigateTo('admin-dashboard')}
+          className={`px-3 py-2 rounded-md text-sm font-medium ${
+            activePage === 'admin-dashboard' ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'
+          }`}
+        >
+          Admin
+        </button>
+      </div>
 
     </div>
   );
