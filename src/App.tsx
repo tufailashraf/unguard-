@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Shield, BookOpen, Video, FileText, LayoutDashboard, Link, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, MessageCircle, Menu, X, ChevronDown } from 'lucide-react';
 import ReferenceLibrary from './components/ReferenceLibrary';
 import BookExam from './components/BookExam';
@@ -15,6 +15,14 @@ function App() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [activePage, setActivePage] = useState<string>('home');
   const [activeExamType, setActiveExamType] = useState<string>('practice');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial loading
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   const toggleDropdown = (dropdown: string) => {
     if (activeDropdown === dropdown) {
@@ -186,287 +194,335 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Header/Navigation */}
-      <header className="bg-white shadow-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-
-            <button
-                data-page="home"
-                onClick={() => navigateTo('home')}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
-                }`}
-                >
-                <img src={Logo} alt="logo" className="h-16 w-auto" />
-              </button>
-            
-                </div>
-
-
-            {/* Mobile menu button */}
-            <div className="md:hidden">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleDropdown('mobile-menu');
-                }}
-                className="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-2 rounded-md"
-              >
-                {activeDropdown === 'mobile-menu' ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </button>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              <button
-                data-page="home"
-                onClick={() => navigateTo('home')}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
-                  }`}
-              >
-                Home
-              </button>
-
-              {/* Reference Link */}
-              <button
-                data-page="reference"
-                onClick={() => navigateTo('reference')}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'reference' ? 'font-semibold text-blue-600' : ''}`}
-              >
-                Reference
-              </button>
-
-              {/* Videos Link */}
-              <button
-                data-page="videos"
-                onClick={() => navigateTo('videos')}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'videos' ? 'font-semibold text-blue-600' : ''
-                  }`}
-              >
-                Videos
-              </button>
-
-              {/* Exam Link with Dropdown */}
-              <div className="relative">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleDropdown('exam');
-                  }}
-                  className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 flex items-center gap-1 group ${activePage === 'exam' ? 'font-semibold text-blue-600' : ''
-                    }`}
-                >
-                  Exam
-                  <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === 'exam' ? 'rotate-180' : ''
-                    }`} />
-                </button>
-                {activeDropdown === 'exam' && (
-                  <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 animate-fadeIn z-50">
-                    <button
-                      onClick={() => navigateTo('exam', 'practice')}
-                      className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${activePage === 'exam' && activeExamType === 'practice' ? 'bg-blue-50 text-blue-600' : ''
-                        }`}
-                    >
-                      Book Exam
-                    </button>
-
-                    <button
-                      onClick={() => navigateTo('quiz-app')}
-                      className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${activePage === 'quiz-app' ? 'bg-blue-50 text-blue-600' : ''
-                        }`}
-                    >
-                      Take Exam
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Contact Link */}
-              <button
-                data-page="contact"
-                onClick={() => navigateTo('contact')}
-                className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'contact' ? 'font-semibold text-blue-600' : ''
-                  }`}
-              >
-                Contact
-              </button>
-
-              {/* Chat Link */}
-              <button
-                data-page="login"
-                onClick={() => navigateTo('login')}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
-              >
-                Login
-              </button>
-            </nav>
+    <>
+      <div className={`fixed inset-0 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 flex items-center justify-center z-50 transition-all duration-700 ease-in-out ${isLoading ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}`}>
+        <div className="relative">
+          {/* Decorative background circles */}
+          <div className="absolute -inset-10 opacity-30">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-blue-400 rounded-full filter blur-xl animate-pulse"></div>
+            <div className="absolute bottom-0 right-0 w-32 h-32 bg-purple-400 rounded-full filter blur-xl animate-pulse delay-300"></div>
           </div>
 
-          {/* Mobile Navigation Menu */}
-          {activeDropdown === 'mobile-menu' && (
-            <nav className="md:hidden mt-4 pb-4 border-t border-gray-200 animate-slideDown">
-              <div className="flex flex-col space-y-4 pt-4">
+          {/* Outer spinning ring with gradient */}
+          <div className="w-32 h-32 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-400 p-1 animate-[spin_3s_linear_infinite]">
+            <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900"></div>
+          </div>
+          
+          {/* Middle ring with dash effect */}
+          <div className="absolute top-0 left-0 w-32 h-32 border-4 border-dashed border-purple-400/40 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
+          
+          {/* Inner spinning ring with gradient */}
+          <div className="absolute top-4 left-4 w-24 h-24 rounded-full bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 p-1 animate-[spin_4s_linear_infinite]">
+            <div className="w-full h-full rounded-full bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900"></div>
+          </div>
+          
+          {/* Center glowing orb */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="w-12 h-12 bg-purple-400/50 rounded-full animate-pulse filter blur-md"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-8 h-8 bg-blue-400/50 rounded-full animate-ping"></div>
+          </div>
+          
+          {/* Loading text with enhanced effects */}
+          <div className="mt-12 text-center relative">
+            <div className="text-2xl font-bold tracking-wider relative overflow-hidden">
+              <span className="relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
+                Loading
+              </span>
+              <span className="inline-flex ml-1">
+                <span className="animate-bounce delay-0 text-blue-400">.</span>
+                <span className="animate-bounce delay-100 text-purple-400">.</span>
+                <span className="animate-bounce delay-200 text-indigo-400">.</span>
+              </span>
+              <div className="absolute top-0 -inset-x-10 h-full bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-[shimmer_1.5s_ease-in-out_infinite] transform -skew-x-12"></div>
+            </div>
+            <div className="mt-2 text-purple-400/80 text-sm animate-pulse">Please wait</div>
+          </div>
+        </div>
+      </div>
+      
+      <div className={`transition-all duration-700 ease-in-out ${isLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+        <div className="flex flex-col min-h-screen">
+          {/* Header/Navigation */}
+          <header className="bg-white shadow-md sticky top-0 z-50">
+            <div className="container mx-auto px-4 py-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+
                 <button
-                  data-page="home"
-                  onClick={() => {
-                    navigateTo('home');
-                    toggleDropdown('mobile-menu');
-                  }}
-                  className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
+                    data-page="home"
+                    onClick={() => navigateTo('home')}
+                    className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
                     }`}
-                >
-                  Home
-                </button>
-                <button
-                  data-page="videos"
-                  onClick={() => {
-                    navigateTo('videos');
-                    toggleDropdown('mobile-menu');
-                  }}
-                  className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'videos' ? 'font-semibold text-blue-600' : ''
-                    }`}
-                >
-                  Videos
-                </button>
-                <div>
+                    >
+                    <img src={Logo} alt="logo" className="h-16 w-auto" />
+                  </button>
+                
+                    </div>
+
+
+                {/* Mobile menu button */}
+                <div className="md:hidden">
                   <button
-                    data-page="exam"
-                    onClick={() => {
-                      navigateTo('exam');
+                    onClick={(e) => {
+                      e.stopPropagation();
                       toggleDropdown('mobile-menu');
                     }}
-                    className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 w-full text-center ${activePage === 'exam' ? 'font-semibold text-blue-600' : ''
+                    className="text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 p-2 rounded-md"
+                  >
+                    {activeDropdown === 'mobile-menu' ? (
+                      <X className="h-6 w-6" />
+                    ) : (
+                      <Menu className="h-6 w-6" />
+                    )}
+                  </button>
+                </div>
+
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex items-center space-x-8">
+                  <button
+                    data-page="home"
+                    onClick={() => navigateTo('home')}
+                    className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
                       }`}
                   >
-                    Exam
+                    Home
                   </button>
-                  <div className="pl-4 space-y-2 mt-2">
+
+                  {/* Reference Link */}
+                  <button
+                    data-page="reference"
+                    onClick={() => navigateTo('reference')}
+                    className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'reference' ? 'font-semibold text-blue-600' : ''}`}
+                  >
+                    Reference
+                  </button>
+
+                  {/* Videos Link */}
+                  <button
+                    data-page="videos"
+                    onClick={() => navigateTo('videos')}
+                    className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'videos' ? 'font-semibold text-blue-600' : ''
+                      }`}
+                  >
+                    Videos
+                  </button>
+
+                  {/* Exam Link with Dropdown */}
+                  <div className="relative">
                     <button
-                      data-page="exam"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleDropdown('exam');
+                      }}
+                      className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 flex items-center gap-1 group ${activePage === 'exam' ? 'font-semibold text-blue-600' : ''
+                        }`}
+                    >
+                      Exam
+                      <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${activeDropdown === 'exam' ? 'rotate-180' : ''
+                        }`} />
+                    </button>
+                    {activeDropdown === 'exam' && (
+                      <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 animate-fadeIn z-50">
+                        <button
+                          onClick={() => navigateTo('exam', 'practice')}
+                          className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${activePage === 'exam' && activeExamType === 'practice' ? 'bg-blue-50 text-blue-600' : ''
+                            }`}
+                        >
+                          Book Exam
+                        </button>
+
+                        <button
+                          onClick={() => navigateTo('quiz-app')}
+                          className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 ${activePage === 'quiz-app' ? 'bg-blue-50 text-blue-600' : ''
+                            }`}
+                        >
+                          Take Exam
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Contact Link */}
+                  <button
+                    data-page="contact"
+                    onClick={() => navigateTo('contact')}
+                    className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'contact' ? 'font-semibold text-blue-600' : ''
+                      }`}
+                  >
+                    Contact
+                  </button>
+
+                  {/* Chat Link */}
+                  <button
+                    data-page="login"
+                    onClick={() => navigateTo('login')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200"
+                  >
+                    Login
+                  </button>
+                </nav>
+              </div>
+
+              {/* Mobile Navigation Menu */}
+              {activeDropdown === 'mobile-menu' && (
+                <nav className="md:hidden mt-4 pb-4 border-t border-gray-200 animate-slideDown">
+                  <div className="flex flex-col space-y-4 pt-4">
+                    <button
+                      data-page="home"
                       onClick={() => {
-                        navigateTo('exam', 'practice');
+                        navigateTo('home');
                         toggleDropdown('mobile-menu');
                       }}
-                      className={`block w-full text-left text-gray-700 hover:text-blue-600 transition-colors text-center duration-200 ${activePage === 'exam' && activeExamType === 'practice' ? 'text-blue-600' : ''
+                      className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'home' ? 'font-semibold text-blue-600' : ''
                         }`}
                     >
-                      Book Exam
+                      Home
                     </button>
-
                     <button
-                      data-page="quiz-app"
-                      onClick={() => navigateTo('quiz-app')}
-                      className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 text-center hover:text-blue-600 ${activePage === 'quiz-app' ? 'bg-blue-50 text-blue-600' : ''
+                      data-page="videos"
+                      onClick={() => {
+                        navigateTo('videos');
+                        toggleDropdown('mobile-menu');
+                      }}
+                      className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'videos' ? 'font-semibold text-blue-600' : ''
                         }`}
                     >
-                      Take Exam
+                      Videos
+                    </button>
+                    <div>
+                      <button
+                        data-page="exam"
+                        onClick={() => {
+                          navigateTo('exam');
+                          toggleDropdown('mobile-menu');
+                        }}
+                        className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 w-full text-center ${activePage === 'exam' ? 'font-semibold text-blue-600' : ''
+                          }`}
+                      >
+                        Exam
+                      </button>
+                      <div className="pl-4 space-y-2 mt-2">
+                        <button
+                          data-page="exam"
+                          onClick={() => {
+                            navigateTo('exam', 'practice');
+                            toggleDropdown('mobile-menu');
+                          }}
+                          className={`block w-full text-left text-gray-700 hover:text-blue-600 transition-colors text-center duration-200 ${activePage === 'exam' && activeExamType === 'practice' ? 'text-blue-600' : ''
+                            }`}
+                        >
+                          Book Exam
+                        </button>
+
+                        <button
+                          data-page="quiz-app"
+                          onClick={() => navigateTo('quiz-app')}
+                          className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 text-center hover:text-blue-600 ${activePage === 'quiz-app' ? 'bg-blue-50 text-blue-600' : ''
+                            }`}
+                        >
+                          Take Exam
+                        </button>
+                      </div>
+                    </div>
+                    <button
+                      data-page="contact"
+                      onClick={() => {
+                        navigateTo('contact');
+                        toggleDropdown('mobile-menu');
+                      }}
+                      className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'contact' ? 'font-semibold text-blue-600' : ''
+                        }`}
+                    >
+                      Contact
+                    </button>
+                    <button
+                      data-page="login"
+                      onClick={() => {
+                        navigateTo('login');
+                        toggleDropdown('mobile-menu');
+                      }}
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200 text-center"
+                    >
+                      Login
                     </button>
                   </div>
+                </nav>
+              )}
+            </div>
+          </header>
+
+          {/* Main Content */}
+          {renderPage()}
+
+          {/* Footer */}
+          {activePage !== 'admin-dashboard' && (
+            <footer className="bg-gray-900 text-white mt-auto">
+              <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">About Us</h3>
+                    <p className="text-gray-400">
+                      We provide comprehensive technical training and resources for engineering professionals.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul className="space-y-2">
+                      <li><button data-page="videos" onClick={() => navigateTo('videos')} className="text-gray-400 hover:text-white">Video Library</button></li>
+                      <li><button data-page="exam" onClick={() => navigateTo('exam')} className="text-gray-400 hover:text-white">Book Exam</button></li>
+                      <li><button data-page="contact" onClick={() => navigateTo('contact')} className="text-gray-400 hover:text-white">Contact Us</button></li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
+                    <ul className="space-y-2">
+                      <a href='mailto: ' className="flex items-center text-gray-400">
+                        <Mail size={16} className="mr-2" />
+                        info@example.com
+                      </a>
+                      <li className="flex items-center text-gray-400">
+                        <Phone size={16} className="mr-2" />
+                        +1 (555) 123-4567
+                      </li>
+                      <li className="flex items-center text-gray-400">
+                        <MapPin size={16} className="mr-2" />
+                        123 Tech Street, CA 94043
+                      </li>
+                    </ul>
+                    <div className="flex space-x-4 mt-4">
+                      <a href="#" className="text-gray-400 hover:text-white">
+                        <Facebook size={20} />
+                      </a>
+                      <a href="#" className="text-gray-400 hover:text-white">
+                        <Twitter size={20} />
+                      </a>
+                      <a href="#" className="text-gray-400 hover:text-white">
+                        <Linkedin size={20} />
+                      </a>
+                    </div>
+                  </div>
                 </div>
-                <button
-                  data-page="contact"
-                  onClick={() => {
-                    navigateTo('contact');
-                    toggleDropdown('mobile-menu');
-                  }}
-                  className={`text-gray-700 hover:text-blue-600 transition-colors duration-200 ${activePage === 'contact' ? 'font-semibold text-blue-600' : ''
-                    }`}
-                >
-                  Contact
-                </button>
-                <button
-                  data-page="login"
-                  onClick={() => {
-                    navigateTo('login');
-                    toggleDropdown('mobile-menu');
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors duration-200 text-center"
-                >
-                  Login
-                </button>
               </div>
-            </nav>
+            </footer>
+          )}
+
+          {/* Chat Bubble */}
+          {activePage !== 'login' && activePage !== 'chat' && (
+            <div className="fixed bottom-10 right-10">
+              <button
+                data-page="chat"
+                onClick={() => navigateTo('chat')}
+                aria-label="Open Paper Generation"
+                className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
+                <MessageCircle className="w-8 h-8 text-gray-800" />
+              </button>
+            </div>
           )}
         </div>
-      </header>
-
-      {/* Main Content */}
-      {renderPage()}
-
-      {/* Footer */}
-      {activePage !== 'admin-dashboard' && (
-        <footer className="bg-gray-900 text-white mt-auto">
-          <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div>
-                <h3 className="text-lg font-semibold mb-4">About Us</h3>
-                <p className="text-gray-400">
-                  We provide comprehensive technical training and resources for engineering professionals.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
-                <ul className="space-y-2">
-                  <li><button data-page="videos" onClick={() => navigateTo('videos')} className="text-gray-400 hover:text-white">Video Library</button></li>
-                  <li><button data-page="exam" onClick={() => navigateTo('exam')} className="text-gray-400 hover:text-white">Book Exam</button></li>
-                  <li><button data-page="contact" onClick={() => navigateTo('contact')} className="text-gray-400 hover:text-white">Contact Us</button></li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
-                <ul className="space-y-2">
-                  <a href='mailto: ' className="flex items-center text-gray-400">
-                    <Mail size={16} className="mr-2" />
-                    info@example.com
-                  </a>
-                  <li className="flex items-center text-gray-400">
-                    <Phone size={16} className="mr-2" />
-                    +1 (555) 123-4567
-                  </li>
-                  <li className="flex items-center text-gray-400">
-                    <MapPin size={16} className="mr-2" />
-                    123 Tech Street, CA 94043
-                  </li>
-                </ul>
-                <div className="flex space-x-4 mt-4">
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    <Facebook size={20} />
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    <Twitter size={20} />
-                  </a>
-                  <a href="#" className="text-gray-400 hover:text-white">
-                    <Linkedin size={20} />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
-      )}
-
-      {/* Chat Bubble */}
-      {activePage !== 'login' && activePage !== 'chat' && (
-        <div className="fixed bottom-10 right-10">
-          <button
-            data-page="chat"
-            onClick={() => navigateTo('chat')}
-            aria-label="Open Paper Generation"
-            className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
-            <MessageCircle className="w-8 h-8 text-gray-800" />
-          </button>
-        </div>
-      )}
-
-    </div>
+      </div>
+    </>
   );
 }
 
